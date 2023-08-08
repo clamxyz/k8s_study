@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nodescheduler-nodeselector
+spec:
+  nodeSelector:
+    biz: game
+  containers:
+  - name: c1
+    image: nginx
+    imagePullPolicy: IfNotPresent
+

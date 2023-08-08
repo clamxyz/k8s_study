@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingress-http
+  # 这里的命名空间和ingress-nginx-controller是一个命名空间
+  namespace: ingress-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-http
+  template:
+    metadata:
+      labels:
+        app: nginx-http 
+    spec:
+      containers:
+      - name: c1
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 80
+---
+# service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-http
+  namespace: ingress-nginx
+spec:
+  selector:
+    app: nginx-http
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx-ds
+  template:
+    metadata:
+      labels:
+        app: nginx-ds
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: nginx-ds
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            memory: 100Mi  

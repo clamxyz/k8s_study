@@ -1,0 +1,49 @@
+# service
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-sts-nginx
+spec:
+  selector:
+    app: sts-nginx
+  clusterIP: None  
+  ports:
+  - protocol: TCP
+    port: 8090
+    targetPort: 80
+---    
+# statefulset
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sts-nginx
+spec:
+  replicas: 2
+  serviceName: "svc-sts-nginx"
+  selector:
+    matchLabels:
+      app: sts-nginx
+  template:
+    metadata:
+      labels:
+        app: sts-nginx
+    spec:    
+      containers:
+      - name: c1
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: web
+          containerPort: 80
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+    - metadata:
+        name: www
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: 2Mi

@@ -1,0 +1,48 @@
+# service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: default
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      protocol: TCP
+  clusterIP: None  
+---
+# app
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-app
+  namespace: default
+spec:
+  serviceName: mysql-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      nodeName: minikube-m02
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: 123abc
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-data
+        hostPath: 
+          path: /opt/mysqldata

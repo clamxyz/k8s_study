@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mysql-dump
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      nodeName: minikube
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/sh", "-c", "mysqldump --host mysql-service -uroot -p123abc --databases mysql > /root/mysql2023.sql"]
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /root
+      volumes:
+      - name: mysql-data
+        hostPath:
+          path: /opt/mysqldump

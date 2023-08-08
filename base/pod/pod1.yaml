@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  containers:
+    - name: kubepod1
+      image: centos:7 
+      imagePullPolicy: IfNotPresent
+      tty: true
+      args:
+        - /usr/bin/bash
+

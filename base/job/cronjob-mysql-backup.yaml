@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cj-mysqldump
+  namespace: default
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    metadata:
+      name: cj-mysqldump
+      namespace: default
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: mysqldump
+            image: mysql:5.7
+            imagePullPolicy: IfNotPresent
+            command: ["/bin/sh", "-c", "mysqldump --host mysql-service -uroot -p123abc --databases mysql > /root/mysql`date +%Y%m%d%H%M`.sql"]
+            volumeMounts:
+            - name: mysqldump-data
+              mountPath: /root
+          volumes:
+          - name: mysqldump-data
+            hostPath:
+              path: /opt/mysqldump

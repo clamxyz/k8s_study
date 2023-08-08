@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cj-helloworld
+spec:
+  schedule: "* * * * *" # 每个1分钟执行
+  jobTemplate:
+    metadata:
+      name: cj-helloworld
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date;echo hello kubernetes
+          restartPolicy: Never

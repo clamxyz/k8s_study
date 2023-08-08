@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-nginx
+spec:
+  replicas: 1 # 副本集， deployment使用replicaSet控制器
+  selector:  
+    matchLabels:  
+      app: nginx # 匹配的pod标签，表示deployment和rs控制器控制带有此标签的pod
+  template: # deployment中的Pod是通过这个模板进行创建的。rs和deploy管理的pod是通过label进行关联的
+    metadata: # 下面的这些和pod是一样的
+      labels:
+        app: nginx	
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

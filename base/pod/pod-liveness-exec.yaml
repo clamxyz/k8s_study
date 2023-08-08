@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-liveness-exec
+  namespace: default
+spec:
+  containers:
+  - name: c1
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy;sleep 30; rm -f /tmp/healthy;sleep 600
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5 # 启动后延迟5秒
+      periodSeconds: 5 # 间隔5秒

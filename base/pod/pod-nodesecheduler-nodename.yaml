@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nodescheduler-nodename
+spec:
+  nodeName: minikube
+  containers:
+  - name: c1
+    image: nginx
+    imagePullPolicy: IfNotPresent

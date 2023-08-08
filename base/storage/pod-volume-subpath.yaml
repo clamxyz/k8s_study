@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-subpath
+spec:
+  containers:
+  - name: c1
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh", "-c", "sleep 60000"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+      subPath: data1
+  - name: c2
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh", "-c", "sleep 60000"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+      subPath: data2
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: pvc-nfs

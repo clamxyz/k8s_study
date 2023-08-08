@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: volume-emptydir
+spec:
+  containers:
+  - name: read
+    image: centos:7
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/bash", "-c", "for i in `seq 1 1000`;do echo $i > /data/1.txt;sleep 1;done"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  - name: write
+    image: centos:7
+    imagePullPolicy: IfNotPresent
+    command: ["bin/bash", "-c", "for i in `seq 1 1000`;do sleep 1;cat /data/1.txt;done"]
+    volumeMounts:
+    - name: data
+      mountPath: /data
+  volumes:
+  - name: data
+    emptyDir: {}
+

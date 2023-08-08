@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-http-rules
+  namespace: ingress-nginx
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    # nginx中的虚拟主机名
+  - host: www.k8slocal.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: nginx-http
+            port:
+              number: 80
