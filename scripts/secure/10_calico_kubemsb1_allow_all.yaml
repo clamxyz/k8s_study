@@ -1,0 +1,13 @@
+# 允许所有的主机访问kubemsb1中的资源
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubemsb1-allow-all
+  namespace: kubemsb1
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress", "Egress"]
+  ingress: 
+  - {}  # 为空表示全部放行
+  egress: 
+  - {}

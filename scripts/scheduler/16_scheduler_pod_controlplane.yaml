@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sched-dp-controlplane
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dp-controlplane
+  template:
+    metadata:
+      labels:
+        app: dp-controlplane
+    spec:
+      containers:
+      - image: harbor.kubemsb.com/library/nginx-web:0.1
+        name: c
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule

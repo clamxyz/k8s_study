@@ -1,0 +1,21 @@
+# 设置规则，相同env:test标签的命名空间可以互相访问
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubemsb1-allow-ns-label
+  namespace: kubemsb1
+spec:
+  podSelector: {}
+  policyTypes: ["Egress", "Ingress"]
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          env: test
+      podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          env: test
+      podSelector: {}

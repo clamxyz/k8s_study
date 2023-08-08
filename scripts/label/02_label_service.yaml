@@ -1,0 +1,18 @@
+# 提前使用命令行创建了两个pod, nginx-web, nginx-web01
+# 标签分别为 app=nginx,env=test app=nginx,env=prod
+# 这里演示service使用标签选择对应的服务
+# kubectl run nginx-web01 --image=harbor.kubemsb.com/library/nginx-web:0.1 -l 'app=nginx,env=test'
+# kubectl run nginx-web --image=harbor.kubemsb.com/library/nginx-web:0.1 -l 'app=nginx,env=prod'
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-web
+spec:
+  selector:
+    app: nginx
+    env: prod
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

@@ -1,0 +1,20 @@
+# 演示ReplicationController， 副本数量2个
+# 和rs的区别是selector、kind、apiVersion不一致，其他都一样
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: rc-nginx
+spec:
+  selector:
+    app: nginx-web
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-web
+    spec:
+      containers:
+      - name: c
+        image: harbor.kubemsb.com/library/nginx-web:0.1
+        ports:
+        - containerPort: 80

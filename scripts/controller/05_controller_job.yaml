@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-busybox
+spec:
+  parallelism: 1
+  completions: 5
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: harbor.kubemsb.com/library/busybox:1.28
+        command:
+        - /bin/sh
+        - -c
+        - echo "job test"; sleep 1
+      restartPolicy: Never

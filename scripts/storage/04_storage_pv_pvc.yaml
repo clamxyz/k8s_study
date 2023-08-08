@@ -1,0 +1,28 @@
+# 演示pv和pvc使用
+# 为了方便这里的pv使用hostpath
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath
+spec:
+  accessModes: 
+  - ReadWriteMany
+  capacity:
+    storage: 3Gi
+  hostPath:
+    path: /opt/index-page-pv
+    type: DirectoryOrCreate
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath
+spec:
+  accessModes: 
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ""
+  

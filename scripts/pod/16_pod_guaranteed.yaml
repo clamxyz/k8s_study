@@ -1,0 +1,17 @@
+# 演示具备Guaranteed级别的qos
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-guaranteed
+spec:
+  containers:
+  - name: guaranteed-c
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["/bin/sh", "-c", "sleep 6000"]
+    resources:
+      limits:
+        memory: 100Mi
+        cpu: 100m
+      requests:
+        memory: 100Mi
+        cpu: 100m

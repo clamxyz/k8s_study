@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-uri
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: / # 默认情况下，nginx也会将/uri转发给后端服务。我们后端服务都是/，没有实现/uri，所以，这里实现目标重写
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.k8slocal.com
+    http:
+      paths:
+      - path: /nginx
+        pathType: Prefix
+        backend:
+          service: 
+            name: svc-ingress-nginx-web
+            port:
+              number: 80
+      - path: /tomcat
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-ingress-tomcat-web
+            port:
+              number: 8080

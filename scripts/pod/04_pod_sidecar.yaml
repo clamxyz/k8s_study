@@ -1,0 +1,27 @@
+# sidecar容器实践
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-sidecar
+spec:
+  containers:
+  - name: nginx-web
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: nginx-index
+      mountPath: /usr/share/nginx/html
+  - name: nginx-sidecar
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command:
+    - sh
+    - -c
+    - for i in `seq 1 100`;do echo index-$i > /testdir/index.html;sleep 2;done
+    volumeMounts:
+    - name: nginx-index
+      mountPath: /testdir
+  volumes:
+  - name: nginx-index
+    emptyDir: {}
+   

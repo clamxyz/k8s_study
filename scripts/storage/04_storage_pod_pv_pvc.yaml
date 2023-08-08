@@ -1,0 +1,18 @@
+# 使用pv/pvc的演示
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-pv-pvc
+spec:
+  containers:
+  - name: c
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    volumeMounts:
+    - name: index-page
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: index-page
+    persistentVolumeClaim:
+      claimName: pvc-hostpath
+
+      

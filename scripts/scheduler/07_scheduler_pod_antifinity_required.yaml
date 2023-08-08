@@ -1,0 +1,54 @@
+# 演示数据库服务器不要分布在同一个节点上
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-antiaffinity-db1
+  labels:
+    app: db
+spec:
+  containers:
+  - name: db
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels: 
+            app: db
+        topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-antiaffinity-db2
+  labels:
+    app: db
+spec:
+  containers:
+  - name: db
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels: 
+            app: db
+        topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-antiaffinity-db3
+  labels:
+    app: db
+spec:
+  containers:
+  - name: db
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels: 
+            app: db
+        topologyKey: kubernetes.io/hostname

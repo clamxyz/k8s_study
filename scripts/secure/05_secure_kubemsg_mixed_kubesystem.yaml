@@ -1,0 +1,14 @@
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubemsb-clusterrolebinding-mixed-ks
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubemsb-clusterrole-mixed
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: kubemsb

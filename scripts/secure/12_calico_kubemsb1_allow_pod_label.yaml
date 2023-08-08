@@ -1,0 +1,21 @@
+# 设置规则，所有命名空间，具有biz=game标签的主机可以ping通
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kubemsb1-allow-pod-label
+  namespace: kubemsb1
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress", "Egress"]
+  ingress:
+  - from:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          biz: game
+  egress:
+  - to:
+    - namespaceSelector: {}
+      podSelector:
+        matchLabels:
+          biz: game

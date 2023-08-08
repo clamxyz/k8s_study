@@ -1,0 +1,40 @@
+# hpa演示用的应用服务
+# 这里采用django-web:0.1作为演示系统
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-apps-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hpa-apps
+  template:
+    metadata:
+      labels:
+        app: hpa-apps
+    spec:
+      containers:
+      - name: c
+        image: harbor.kubemsb.com/library/nginx-web:0.1
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 1000m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-hpa-apps
+spec:
+  selector:
+    app: hpa-apps
+  type: ClusterIP
+  ports:
+  - name: hpa-apps
+    protocol: TCP
+    port: 80
+    targetPort: 80

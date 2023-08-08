@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob-busybox
+spec:
+  # 分 时 日 月 周
+  schedule: '* * * * *'
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: harbor.kubemsb.com/library/busybox:1.28
+            command:
+            - /bin/sh
+            - -c
+            - echo cronjob && sleep 1
+          restartPolicy: Never

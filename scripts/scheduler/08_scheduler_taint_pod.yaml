@@ -1,0 +1,14 @@
+# 给worker1添加污点node-type=prod:NoSchedule
+# 给worker1添加标签env=dev
+# 创建一个pod并设置nodeSelector为env=dev，由于存在污点，Pod调度会处于Pending
+# 当把污点删除后，Pod就会被调度到env=dev节点
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-taint-env-dev
+spec:
+  containers:
+  - name: c
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  nodeSelector:
+    env: dev

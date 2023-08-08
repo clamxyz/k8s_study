@@ -1,0 +1,13 @@
+# 实现静态pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-static
+  labels:
+    app: pod-static
+spec:
+  containers:
+  - name: nginx
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    ports:
+    - containerPort: 80

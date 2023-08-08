@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-tls
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.k8slocal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            name: svc-ingress-nginx-web
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - www.k8slocal.com
+    secretName: superopsmsb-ingress-tls

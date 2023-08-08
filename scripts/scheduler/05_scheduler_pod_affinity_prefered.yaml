@@ -1,0 +1,22 @@
+# Pod的软亲和
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-affinity-prefered
+  namespace: default
+spec:
+  containers:
+  - name: c
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 60
+        podAffinityTerm:
+          labelSelector: 
+            matchLabels:
+              env: test
+          namespaceSelector: {}
+          topologyKey: kubernetes.io/hostname
+
+      

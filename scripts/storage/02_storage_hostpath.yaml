@@ -1,0 +1,20 @@
+# 演示hostpath类型的存储使用方式
+# hostpath使用主机目录来作为数据持久化目录， 会使用pod分配的节点上的目录作为挂载的目录
+# hostpath在pod删除后仍然存在
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hostpath
+spec:
+  containers:
+  - name: c1
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    volumeMounts:
+    - name: index-page
+      mountPath: /usr/share/nginx/html
+  volumes:
+  - name: index-page
+    hostPath:
+      path: /opt/index-page
+      type: DirectoryOrCreate
+        

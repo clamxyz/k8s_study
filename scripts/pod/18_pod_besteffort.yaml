@@ -1,0 +1,10 @@
+# 演示具备Brustable级别的qos
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-besteffort
+spec:
+  containers:
+  - name: c
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["/bin/sh", "-c", "sleep 60000"]

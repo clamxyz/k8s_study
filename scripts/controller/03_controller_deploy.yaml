@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dp-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-web
+  template:
+    metadata:
+      labels:
+        app: nginx-web
+    spec:
+      containers:
+      - name: c
+        image: harbor.kubemsb.com/library/nginx-web:0.1
+        ports:
+        - containerPort: 80

@@ -1,0 +1,22 @@
+# 演示emptydir类型的存储使用方式
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-emptydir
+spec:
+  containers:
+  - name: c1
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    volumeMounts:
+    - name: index-page
+      mountPath: /usr/share/nginx/html
+  - name: c2
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["/bin/sh", "-c", "for i in `seq 100`;do echo index-$i > /testdir/index.html;sleep 2;done"]
+    volumeMounts:
+    - name: index-page
+      mountPath: /testdir
+  volumes:
+  - name: index-page
+    emptyDir: {}
+        

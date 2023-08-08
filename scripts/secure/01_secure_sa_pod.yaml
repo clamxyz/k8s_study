@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-sa
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-sa
+spec:
+  containers:
+  - name: c
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+  serviceAccountName: nginx-sa
+  
