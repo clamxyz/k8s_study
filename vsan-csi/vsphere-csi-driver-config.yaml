@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vmware-system-csi
+---
+
+apiVersion: v1
+data:
+  csi-vsphere.conf: W0dsb2JhbF0KY2x1c3Rlci1pZCA9ICJrdWJlcm5ldGVzIiN05aGr5YaZ6ZuG576k5ZCN56ewCgpbVmlydHVhbENlbnRlciAiMTcyLjE2LjEyOC4yMCJdICPloavlhpl2Y2VudGVy5L+h5oGvCmluc2VjdXJlLWZsYWcgPSAidHJ1ZSIj6YCJ5oupZmFsc2XlkI7opoHms6jmmI5jYeaWh+S7tuWSjOaMh+e6ue+8jOWPr+mAieaLqXRydWUKdXNlciA9ICJhZG1pbmlzdHJhdG9yQHZzcGhlcmUubG9jYWwiCnBhc3N3b3JkID0gIlBAc3N3MHJkIgpwb3J0ID0gIjQ0MyIKZGF0YWNlbnRlcnMgPSAiRGF0YWNlbnRlciIj6YCJ5oup6ZuG576k6IqC54K55omA5Zyo55qEZGF0YWNlbnRlcgo=
+kind: Secret
+metadata:
+  name: vsphere-config-secret
+  namespace: vmware-system-csi
