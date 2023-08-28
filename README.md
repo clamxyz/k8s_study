@@ -6,3 +6,5 @@ base目录是k8s使用的简单示例
 # cka
 cka是CKA认证课程中的脚本和资源清单文件
 
+# vsan-csi
+k8s中使用vsphere vsan的脚本和资源清单文件
