@@ -1,0 +1,42 @@
+# 1. 新建一个ServiceAccount, my-ns-sa
+# 2. 创建一个角色sa-pod-viewer, 仅提供pod的get,list,watch功能
+# 3. 绑定角色sa-pod-viewer到ServiceAccount
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sa-ns
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-ns-sa
+  namespace: sa-ns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: sa-pod-viewer
+  namespace: sa-ns
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sa-rb
+  namespace: sa-ns
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sa-pod-viewer
+subjects:
+- kind: ServiceAccount
+  name: my-ns-sa
+  namespace: sa-ns

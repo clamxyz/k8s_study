@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: Node
+metadata:
+  labels:
+    route-reflector: true
+  name: master1  # 这里设置master1为反射器的主节点
+spec:
+  bgp:
+    ipv4Address: 192.168.159.21/24
+    ipv4IPIPTunnelAddr: 10.244.0.1
+    routeReflectorClusterID: 1.1.1.1 # 这是一个标识，随便取一个

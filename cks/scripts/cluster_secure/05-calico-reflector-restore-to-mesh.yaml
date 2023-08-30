@@ -1,0 +1,19 @@
+apiVersion: projectcalico.org/v3
+kind: Node
+metadata:
+  name: master1
+spec:
+  addresses:
+  - address: 192.168.159.21/24
+    type: CalicoNodeIP
+  - address: 192.168.159.21
+    type: InternalIP
+  bgp:
+    ipv4Address: 192.168.159.21/24
+    ipv4IPIPTunnelAddr: 10.244.0.1
+  orchRefs:
+  - nodeName: master1
+    orchestrator: k8s
+status:
+  podCIDRs:
+  - 10.244.0.0/24

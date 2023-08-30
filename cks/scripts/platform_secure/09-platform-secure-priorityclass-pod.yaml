@@ -1,0 +1,21 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 100000000
+description: 高优先级类，默认100M
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: priorityclass-pod
+spec:
+  containers:
+  - name: nginx-web
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+         memory: 100Mi
+         cpu: 1
+  priorityClassName: high-priority

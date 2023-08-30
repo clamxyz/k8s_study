@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: calc-resouces
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resourcequota-ns-calc-resources
+  namespace: calc-resouces
+spec:
+  hard:
+    requests.cpu: 200m
+    requests.memory: 200Mi

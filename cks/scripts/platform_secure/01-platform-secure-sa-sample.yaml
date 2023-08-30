@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nginx-web-pod-sa
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-web-pod
+spec:
+  containers:
+  - name: nginx-web
+    image: harbor.kubemsb.com/library/nginx-web:0.1
+    imagePullPolicy: IfNotPresent
+  serviceAccountName: nginx-web-pod-sa
