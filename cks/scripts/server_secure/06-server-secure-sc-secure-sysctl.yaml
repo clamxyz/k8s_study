@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sc-pod-secure-sysctls
+spec:
+  securityContext:
+    sysctls:
+    - name: "net.ipv4.ip_local_port_range"
+      value: "1024 65000"
+  containers:
+  - name: busybox
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["sh", "-c", "sleep 6000"]

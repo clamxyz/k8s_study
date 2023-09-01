@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sc-pod-capabilities
+spec:
+  containers:
+  - name: busybox
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["sh", "-c", "sleep 6000"]
+    securityContext:
+      capabilities:
+        add: ["SYS_TIME"]
+        drop: ["CHOWN"]

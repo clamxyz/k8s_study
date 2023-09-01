@@ -1,0 +1,19 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: serviceaccount-name-must-equal-namespace
+spec:
+  crd:
+    spec:
+      names:
+        kind: serviceaccount-name-must-equal-namespace
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package UsernameMustEqualNamespace
+      violation[{"msg": msg}]{
+        name := input.review.userInfo.username
+        namespace := input.review.object.metadata.namespace
+        name != namespace
+        msg := sprintf("提示: 服务账号 %v 不允许到 %v 命名空间中创建SA", [name, namespace])
+      }

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sc-container-pod-id
+spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+  containers:
+  - name: busybox-defualt
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["sh", "-c", "sleep 6000"]
+  - name: busybox-2000
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["sh", "-c", "sleep 6000"]
+    securityContext:
+      runAsUser: 2000  # user和group不一样要存在，不存在也可以运行
+      runAsGroup: 2000

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apparmor-pod
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/apparmor-busybox: localhost/kubernetes-deny-write
+spec:
+  nodeName: worker4
+  containers:
+  - name: apparmor-busybox
+    image: harbor.kubemsb.com/library/busybox:1.28
+    command: ["sh", "-c", "sleep 10000"]

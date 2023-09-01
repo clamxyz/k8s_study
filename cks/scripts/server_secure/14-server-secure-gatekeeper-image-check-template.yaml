@@ -1,0 +1,26 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: image-pull-must-from-private-registry
+spec:
+  crd:
+    spec:
+      names:
+        kind: image-pull-must-from-private-registry
+      validation:
+        openAPIV3Schema:
+          type: object
+          properties:
+            prefix:
+              type: string 
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package admission
+      violation[{"msg": msg}] {
+        containers := input.review.object.spec.containers
+        prefix := input.parameters.prefix
+        some i
+        not startswith(containers[i].image, prefix)
+        msg := sprintf("提示: 镜像 '%v' 的仓库不符合要求", [containers[i].image])
+      }

@@ -1,0 +1,19 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: forbidden-privileged-pod
+spec:
+  crd:
+    spec:
+      names: 
+        kind: forbidden-privileged-pod
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package admission
+      violation[{"msg": msg}]{
+        containers := input.review.object.spec.containers
+        some i;
+        containers[i].securityContext.privileged
+        msg := sprintf("提示: Pod资源对象内部的 %v 容器禁止启用特权模式", [containers[i].name])
+      }
