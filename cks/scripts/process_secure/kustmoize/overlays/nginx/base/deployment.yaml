@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-nginx-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-web
+  template:
+    metadata:
+      labels:
+        app: nginx-web
+    spec:
+      containers:
+      - name: nginx
+        image: harbor.kubemsb.com/library/nginx-web:0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: http

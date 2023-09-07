@@ -1,0 +1,24 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServerRoute
+metadata:
+  name: django-vsr
+  namespace: django
+spec:
+  host: www.k8slocal.com
+  upstreams:
+  - name: django-web-v1
+    service: django-web-svc-v1
+    port: 8000
+  - name: django-web-v2
+    service: django-web-svc-v2
+    port: 8000  
+  subroutes:
+  - path: /django
+    matches:
+    - conditions:
+      - cookie: version
+        value: v2
+      action:
+        pass: django-web-v2
+    action:
+      pass: django-web-v1

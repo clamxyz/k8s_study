@@ -1,0 +1,29 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServerRoute
+metadata:
+  name: nginx-vsr
+  namespace: nginx
+spec:
+  host: www.k8slocal.com
+  upstreams:
+  - name: nginx-web
+    service: nginx-web-svc
+    port: 80
+  subroutes:
+  - path: /nginx
+    action:
+      proxy: 
+        upstream: nginx-web
+        requestHeaders:
+          pass: true
+          set:
+          - name: My-Header
+            value: NGINX-Best
+        responseHeaders:
+          add:
+          - name: My-Header
+            value: ${http_user_agent}
+          - name: IC-Nginx-Version
+            value: ${nginx_version}
+            always: true
+        rewritePath: /

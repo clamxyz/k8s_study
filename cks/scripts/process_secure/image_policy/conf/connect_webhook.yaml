@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Config
+clusters:
+  - cluster:
+      certificate-authority: /etc/kubernetes/image-policy/webhook.pem
+      # 定制
+      server: https://192.168.159.21:8080/image_check
+    name: webhook
+contexts:
+  - context:
+      cluster: webhook
+      user: apiserver
+    name: webhook
+current-context: webhook 
+preferences: {}
+users:
+  - name: apiserver
+    user:
+      client-certificate: /etc/kubernetes/image-policy/apiserver-client.pem
+      client-key: /etc/kubernetes/image-policy/apiserver-client-key.pem

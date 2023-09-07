@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubemsb
+---
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: ingress-vs
+  namespace: kubemsb
+spec:
+  host: www.k8slocal.com
+  routes:
+  - path: /nginx
+    route: nginx/nginx-vsr
+  - path: /django
+    route: django/django-vsr

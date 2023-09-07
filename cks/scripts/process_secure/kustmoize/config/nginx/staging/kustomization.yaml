@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: staging
+resources:
+- namespace.yaml
+- ../base
+labels:
+- includeSelectors: true
+  pairs:
+    env: staging
+configMapGenerator:
+- name: cm1
+  literals:
+  - HOST='0.0.0.0'
+secretGenerator:
+- name: secret1
+  type: Opaque
+  files:
+  - namespace.yaml
+generatorOptions:
+  disableNameSuffixHash: true

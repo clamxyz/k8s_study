@@ -1,0 +1,14 @@
+apiVersion: k8s.nginx.org/v1alpha1
+kind: TransportServer
+metadata:
+  name: nginx-tcp
+spec:
+  listener:
+    name: tcp-8001
+    protocol: TCP
+  upstreams:
+  - name: nginx-web
+    service: nginx-web-svc
+    port: 80
+  action:
+    pass: nginx-web
